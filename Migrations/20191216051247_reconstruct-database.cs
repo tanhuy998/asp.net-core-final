@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication1.Migrations
 {
-    public partial class setupdatabasetables : Migration
+    public partial class reconstructdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace WebApplication1.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,7 +44,8 @@ namespace WebApplication1.Migrations
                     Price = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Active = table.Column<bool>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: true)
+                    Slug = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +55,7 @@ namespace WebApplication1.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,17 +67,17 @@ namespace WebApplication1.Migrations
                     PayerName = table.Column<string>(nullable: true),
                     PayerNumber = table.Column<string>(nullable: true),
                     Time = table.Column<DateTime>(nullable: false),
-                    MethodPaymentMethodId = table.Column<int>(nullable: true)
+                    PaymentMethodId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payments_PaymentMethods_MethodPaymentMethodId",
-                        column: x => x.MethodPaymentMethodId,
+                        name: "FK_Payments_PaymentMethods_PaymentMethodId",
+                        column: x => x.PaymentMethodId,
                         principalTable: "PaymentMethods",
                         principalColumn: "PaymentMethodId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +87,7 @@ namespace WebApplication1.Migrations
                     ImageId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Path = table.Column<string>(nullable: true),
-                    ProductId = table.Column<int>(nullable: true)
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,7 +97,7 @@ namespace WebApplication1.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,7 +111,7 @@ namespace WebApplication1.Migrations
                     Note = table.Column<string>(nullable: true),
                     ShipAdress = table.Column<string>(nullable: true),
                     ContactNumber = table.Column<string>(nullable: true),
-                    PaymentId = table.Column<int>(nullable: true)
+                    PaymentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,7 +121,7 @@ namespace WebApplication1.Migrations
                         column: x => x.PaymentId,
                         principalTable: "Payments",
                         principalColumn: "PaymentId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,9 +165,9 @@ namespace WebApplication1.Migrations
                 column: "PaymentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_MethodPaymentMethodId",
+                name: "IX_Payments_PaymentMethodId",
                 table: "Payments",
-                column: "MethodPaymentMethodId");
+                column: "PaymentMethodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",

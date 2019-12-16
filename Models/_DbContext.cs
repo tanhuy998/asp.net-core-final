@@ -38,11 +38,11 @@ namespace WebApplication1.Models
                 .HasForeignKey(op => op.OrderId);
 
             modelBuilder.Entity<Product>()
-                .Property(p => p.Category)
+                .Property(p => p.CategoryId)
                 .IsRequired();
 
             modelBuilder.Entity<Payment>()
-                .Property(p => p.Method)
+                .Property(p => p.PaymentMethodId)
                 .IsRequired();
 
             //modelBuilder.Entity<OrderProduct>()
@@ -62,11 +62,11 @@ namespace WebApplication1.Models
                 .IsRequired();
 
             modelBuilder.Entity<Order>()
-                .Property(p => p.Payment)
+                .Property(p => p.PaymentId)
                 .IsRequired();
 
             modelBuilder.Entity<Image>()
-                .Property(p => p.Product)
+                .Property(p => p.ProductId)
                 .IsRequired();
         }
     }

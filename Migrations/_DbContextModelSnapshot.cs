@@ -47,7 +47,7 @@ namespace WebApplication1.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("ImageId");
@@ -73,7 +73,7 @@ namespace WebApplication1.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShipAdress")
@@ -114,21 +114,21 @@ namespace WebApplication1.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("MethodPaymentMethodId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PayerName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayerNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("MethodPaymentMethodId");
+                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("Payments");
                 });
@@ -158,7 +158,7 @@ namespace WebApplication1.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -184,14 +184,18 @@ namespace WebApplication1.Migrations
                 {
                     b.HasOne("WebApplication1.Models.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Order", b =>
                 {
                     b.HasOne("WebApplication1.Models.Payment", "Payment")
                         .WithMany()
-                        .HasForeignKey("PaymentId");
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApplication1.Models.OrderProduct", b =>
@@ -213,14 +217,18 @@ namespace WebApplication1.Migrations
                 {
                     b.HasOne("WebApplication1.Models.PaymentMethod", "Method")
                         .WithMany("Payments")
-                        .HasForeignKey("MethodPaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Product", b =>
                 {
                     b.HasOne("WebApplication1.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
