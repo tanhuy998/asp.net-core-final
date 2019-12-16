@@ -7,10 +7,10 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class ShopController : Controller
+    public class ShopController : MasterController
     {
         private _DbContext _context;
-        public ShopController(_DbContext context)
+        public ShopController(_DbContext context):base(context)
         {
             _context = context;
         }
@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         [Route("shop/{slug}")]
         public async Task<IActionResult> Index(string slug)
         {
-
+         
 
             var cat = _context.Categories
                 .Where<Category>(c => c.Slug == slug)
@@ -26,10 +26,11 @@ namespace WebApplication1.Controllers
             
             try
             {
-                var products = cat.Products.ToList<Product>();
+                var products = _context.Products.Where(p => p.Category == cat);
 
                 ViewBag.category = cat;
                 ViewBag.products = products;
+                ViewBag.categories = GetMasterData();
                 //string content = "";
 
                 //foreach (Product product in products)
@@ -41,7 +42,8 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Content("<h2>404</h2>");
+                var a = _context.Products.Where(p => p.Category == cat);
+                return Content(a.First().Name);
             }
             
         }

@@ -100,13 +100,13 @@ Dữ liệu này được các chương trình đọc tin chuyên biệt ( gọi
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="index.html">e<span>Fashion</span></a></h1>
+                        <h1><a href="@string.Format("{0}://{1}", Context.Request.Scheme, Context.Request.Host)">e<span>Fashion</span></a></h1>
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html" id="cart-notification">Cart<i class="fa fa-shopping-cart"></i> </a>
+                        <a href="@string.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, "/cart")" id="cart-notification">Cart<i class="fa fa-shopping-cart"></i> </a>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@ Dữ liệu này được các chương trình đọc tin chuyên biệt ( gọi
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li ><a href="">TRANG CHỦ</a></li>
+                        <li ><a href="@string.Format("{0}://{1}", Context.Request.Scheme, Context.Request.Host)">TRANG CHỦ</a></li>
                         <li >
                             <div class="dropdown">
                                 <button class="dropbtn">SẢN PHẨM</button>
@@ -137,8 +137,8 @@ Dữ liệu này được các chương trình đọc tin chuyên biệt ( gọi
                                 </div>
                             </div>
                         </li>
-                        <li ><a href="">Giỏ hàng</a></li>
-                        <li ><a href="">Thanh toán</a></li>
+                        <li ><a href="@string.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, "/cart")">Giỏ hàng</a></li>
+                        <li ><a href="@string.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, "/checkout/")">Thanh toán</a></li>
                          @*<li><a href="#">Category</a></li> 
                          <li><a href="#">Others</a></li> 
                          <li>
