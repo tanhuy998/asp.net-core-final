@@ -13,6 +13,7 @@ namespace WebApplication1.Models
         public string PayerNumber { get; set; }
         public DateTime Time { get; set; }
 
+        public int PaymentMethodId { get; set; }
         public PaymentMethod Method { get; set; }
     }
 }

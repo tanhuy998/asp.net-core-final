@@ -1,0 +1,80 @@
+﻿
+@{
+	ViewData["Title"] = "index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="product-big-title-area">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="product-bit-title text-center">
+					<h2>@ViewBag.category.name</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="single-product-area">
+	<div class="zigzag-bottom"></div>
+	<div class="container">
+		<div class="row">
+			@*@include('layouts.leftSideBar')*@
+
+			@foreach (Product product in ViewBag.Products)
+			{
+				<div class="col-md-3 col-sm-6">
+					<div class="single-shop-product">
+						<div class="product-upper">
+							<img src="@product.Images.FirstOrDefault().Path" alt="@product.Slug">
+						</div>
+						<h2><a href="@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, "/product/",product.Slug)"> @product.Name </a></h2>
+						<div class="product-carousel-price">
+							<ins> @product.Price </ins>
+						</div>
+
+						<div class="product-option-shop">
+							<a class="add_to_cart_button" onclick="AddProduct({{ $product->id }}, 1)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Thêm vào giỏ</a>
+						</div>
+					</div>
+				</div>
+			}
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="product-pagination text-center">
+					@*@if ($page != 10)
+									{ { $products->links() } }
+					@endif*@
+					<!-- <nav>
+					  <ul class="pagination">
+						<li>
+						  <a href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						  </a>
+						</li>
+						<li><a href="">1</a></li>
+						 <li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li>
+						  <a href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						  </a>
+						</li>
+					  </ul>
+					</nav> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

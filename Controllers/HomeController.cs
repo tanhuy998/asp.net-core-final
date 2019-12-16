@@ -9,17 +9,20 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MasterController
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(_DbContext context): base (context)
         {
-            _logger = logger;
+            
         }
 
         public IActionResult Index()
         {
+            var masterData = GetMasterData();
+
+            ViewBag.categories = masterData;
             return View();
         }
 

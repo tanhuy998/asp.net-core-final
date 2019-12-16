@@ -36,6 +36,38 @@ namespace WebApplication1.Models
                 .HasOne<Order>(op => op.Order)
                 .WithMany(o => o.Products)
                 .HasForeignKey(op => op.OrderId);
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Category)
+                .IsRequired();
+
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Method)
+                .IsRequired();
+
+            //modelBuilder.Entity<OrderProduct>()
+            //    .Property(p => p.)
+            //    .IsRequired();
+
+            modelBuilder.Entity<OrderProduct>()
+                .Property(p => p.ProductId)
+                .IsRequired();
+
+            //modelBuilder.Entity<OrderProduct>()
+            //    .Property(p => p.Order)
+            //    .IsRequired();
+
+            modelBuilder.Entity<OrderProduct>()
+                .Property(p => p.OrderId)
+                .IsRequired();
+
+            modelBuilder.Entity<Order>()
+                .Property(p => p.Payment)
+                .IsRequired();
+
+            modelBuilder.Entity<Image>()
+                .Property(p => p.Product)
+                .IsRequired();
         }
     }
 }

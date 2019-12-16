@@ -20,6 +20,8 @@ namespace WebApplication1.Models
         public string Slug { get; set; }
 
         public ICollection<Image> Images { get; set; }
+
+        public int CategoryId { get; set }
         public Category Category { get; set; }
         public IEnumerable<OrderProduct> Orders { get; set; }
     }

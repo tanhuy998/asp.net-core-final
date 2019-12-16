@@ -16,6 +16,8 @@ namespace WebApplication1.Models
         public string ContactNumber { get; set; }
 
         public IEnumerable<OrderProduct> Products { get; set; }
+
+        public int PaymentId { get; set; }
         public Payment Payment { get; set; }
     }
 }
