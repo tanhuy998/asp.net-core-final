@@ -29,7 +29,7 @@
 				<div class="col-md-3 col-sm-6">
 					<div class="single-shop-product">
 						<div class="product-upper">
-							<img src="" alt="@product.Slug">
+							<img src="@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, "/img/", ViewBag.imgs[product.ProductId])" alt="@product.Slug">
 						</div>
 						<h2><a href="@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, "/product/",product.Slug)"> @product.Name </a></h2>
 						<div class="product-carousel-price">
