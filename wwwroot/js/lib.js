@@ -56,10 +56,17 @@ function GetCookieValue(cname) {
     return null;
 }
 
-//function that update for the hole current document 
-function Update() {
-    RenderCartNotification();
+function RenderCartTotal(_id) {
+    if (status != null) {
+        _id = parseInt(_id);
+        let price = document.getElementById('price_' + _id).value;
+    }
+}
 
+//function that update for the hole current document 
+function Update(status = null) {
+    RenderCartNotification();
+    //RenderCartTotal(status);
 }
 
 function RenderCart() {
@@ -79,6 +86,7 @@ function RenderCartNotification() {
 function GetCart() {
     let cart = GetCookieValue('cart');
     if (cart != null) {
+        cart = unescape(cart);
         let cart_list = JSON.parse(cart);
 
         if (cart_list.length > 0) {
@@ -107,27 +115,30 @@ function GetCartProduct(_id) {
     let cart = GetCart();
 
     return cart.reduce((ret, currentProduct) => {
-        if (currentProduct.id == _id) return val;
+        if (currentProduct.id == _id) return currentProduct;
     });
 }
 
 function AddProduct(_id, _quantity) {
     let cart = GetCookieValue('cart');
+    
+    console.log(cart);
     //console.log(_quantity);
     _quantity = parseInt(_quantity);
     _id = parseInt(_id);
 
-    if (cart == null) {
+    if (cart == null ) {
 
         let product_list = [];
 
         product_list.push( {id: _id, qty: _quantity} );
 
-        let val = JSON.stringify(product_list);
+        let val = escape(JSON.stringify(product_list));
 
         SetCookie('cart', val, 1,  '');
     }
     else {
+        cart = unescape(cart);
         let product_list = JSON.parse(cart);
 
         let trace_indexs = [];  //to trace the index of product with qty less than or equal 0
@@ -154,12 +165,13 @@ function AddProduct(_id, _quantity) {
             product_list.splice(indexVal,1);
         });
 
-        let val = JSON.stringify(product_list);
+        let val = escape(JSON.stringify(product_list));
 
         SetCookie('cart', val, 1, '');
     }
 
     Update();
+    window.location.reload;
 }
 
 function AddCartProductCookie(pName, pPrice, pQuantity, img, path) {
@@ -311,7 +323,7 @@ function UpdateCart() {
     document.getElementById("#a1").innerHTML += total;
 }
 
-SetCookie("ship","0",1,"");
+//SetCookie("ship","0",1,"");
 
 function TotalWithShip() {
     let strShip = document.getElementById("#s").innerText;
