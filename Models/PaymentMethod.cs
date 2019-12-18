@@ -9,7 +9,7 @@ namespace WebApplication1.Models
     public class PaymentMethod
     {
         public int PaymentMethodId { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public ICollection<Payment> Payments { get; set; }
     }

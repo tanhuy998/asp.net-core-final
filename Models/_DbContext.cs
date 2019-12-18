@@ -21,6 +21,7 @@ namespace WebApplication1.Models
         //public virtual DbSet<OrderedProduct> OrderedProducts { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<OrderProduct> OrderProducts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
