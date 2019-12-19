@@ -13,6 +13,7 @@ using WebApplication1.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace WebApplication1
 {
@@ -41,7 +42,9 @@ namespace WebApplication1
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<_DbContext>();
 
-
+            services.AddSingleton<Microsoft.Extensions.FileProviders.IFileProvider>(
+                new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             services.AddMvc(config =>
             {

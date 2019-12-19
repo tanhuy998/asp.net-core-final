@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using WebApplication1.Models;
+using System.IO;
 
 namespace WebApplication1.Controllers
 {
@@ -61,6 +63,25 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(product);
+
+                var imgFile = Request.Form.Files["image"];
+                    
+                if(imgFile != null || imgFile.Length > 0)
+                {
+                    Image img = new Image();
+                    img.Path = imgFile.FileName;
+
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", imgFile.FileName);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await imgFile.CopyToAsync(stream);
+                    }
+
+
+                    img.Product = product;
+                    _context.Images.Add(img);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -102,6 +123,28 @@ namespace WebApplication1.Controllers
                 try
                 {
                     _context.Update(product);
+
+                    var imgFile = Request.Form.Files["image"];
+
+                    if (imgFile != null || imgFile.Length > 0)
+                    {
+                        Image img = await _context.Images.Where(i => i.Product == product).FirstOrDefaultAsync();
+
+                        string oldFile_Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", img.Path);
+                        System.IO.File.Delete(oldFile_Path);
+
+                        img.Path = imgFile.FileName;
+                        
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", imgFile.FileName);
+
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await imgFile.CopyToAsync(stream);
+                        }
+
+                        _context.Images.Update(img);
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
