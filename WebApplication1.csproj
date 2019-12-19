@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\SingleProduct\**" />
+    <Content Remove="Views\SingleProduct\**" />
+    <EmbeddedResource Remove="Views\SingleProduct\**" />
+    <None Remove="Views\SingleProduct\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />

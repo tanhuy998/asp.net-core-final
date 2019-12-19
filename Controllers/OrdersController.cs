@@ -33,9 +33,18 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
+            //var order = await _context.Orders
+            //    .Include(o => o.Payment)
+            //    .FirstOrDefaultAsync(m => m.OrderId == id);
+
             var order = await _context.Orders
-                .Include(o => o.Payment)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                        .Include(o => o.Products)
+                        .ThenInclude(p => p.Product)
+                        .Include(o => o.Payment)
+                        .ThenInclude(p => p.Method)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(m => m.OrderId == id);
+
             if (order == null)
             {
                 return NotFound();

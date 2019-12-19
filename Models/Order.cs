@@ -17,6 +17,7 @@ namespace WebApplication1.Models
 
         public IEnumerable<OrderProduct> Products { get; set; }
 
+
         public int PaymentId { get; set; }
         public Payment Payment { get; set; }
     }

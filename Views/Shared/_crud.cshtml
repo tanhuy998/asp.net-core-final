@@ -21,7 +21,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">eFashion - Admin Page</a>
+				<a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Index">eFashion - Admin Page</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -31,9 +31,26 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 						</li>
+
+						<li class="nav-item">
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+									Manage
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a asp-controller="Products" asp-action="Index">Products</a></li>
+									<li><a asp-controller="PaymentMethods" asp-action="Index">Payment Methods</a></li>
+									<li><a asp-controller="Payment" asp-action="Index">Payments</a></li>
+									<li><a asp-controller="Orders" asp-action="Index">Orders</a></li>
+								</ul>
+							</div>
+						</li>
+
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 						</li>
+
 					</ul>
 				</div>
 			</div>
