@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [AllowAnonymous]
     public class ShopController : MasterController
     {
         //private _DbContext _context;

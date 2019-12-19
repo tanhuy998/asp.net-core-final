@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Models;
 
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(_DbContext))]
-    partial class _DbContextModelSnapshot : ModelSnapshot
+    [Migration("20191219043038_add-identity-model")]
+    partial class addidentitymodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,21 +379,6 @@ namespace WebApplication1.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("WebApplication1.Models.RegisterCode", b =>
-                {
-                    b.Property<int>("RegisterCodeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RegisterCodeId");
-
-                    b.ToTable("RegisterCodes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

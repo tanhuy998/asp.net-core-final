@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : MasterController
     {
         //private readonly ILogger<HomeController> _logger;

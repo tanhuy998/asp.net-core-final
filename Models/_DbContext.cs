@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebApplication1.Models
 {
-    public class _DbContext: DbContext
+    public class _DbContext: IdentityDbContext
     {
         public _DbContext(DbContextOptions<_DbContext> options, IConfiguration config): base (options)
         {
@@ -22,10 +23,13 @@ namespace WebApplication1.Models
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<OrderProduct> OrderProducts { get; set; }
+        public virtual DbSet<RegisterCode> RegisterCodes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.OrderId, op.ProductId });
 
             modelBuilder.Entity<OrderProduct>()
@@ -69,6 +73,8 @@ namespace WebApplication1.Models
             modelBuilder.Entity<Image>()
                 .Property(p => p.ProductId)
                 .IsRequired();
+
+
         }
     }
 }

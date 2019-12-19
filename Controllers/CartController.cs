@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Dynamic;
 using WebApplication1.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [AllowAnonymous]
     public class CartController : MasterController
     {
         public CartController(_DbContext context): base(context)

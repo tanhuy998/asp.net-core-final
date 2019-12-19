@@ -1,0 +1,32 @@
+﻿@model WebApplication1.ViewModels.AccountRegisterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Register</title>
+
+	<environment include="Development">
+		<link rel="stylesheet" href="~/css/account.css" />
+	</environment>
+</head>
+<body>
+	<div id="login-box">
+		<div class="left">
+			<h1>Sign up</h1>
+			<form method="post" asp-controller="Account" asp-action="Register">
+				<input asp-for="Email" type="text" placeholder="E-mail" />
+				<input asp-for="Password" placeholder="Password" />
+				<input asp-for="ConfirmPassword" placeholder="Retype password" />
+				<input asp-for="RegisterCode" placeholder="Register code" />
+				<input type="submit" name="signup_submit" value="Sign me up" />
+			</form>
+		</div>
+
+	</div>
+</body>
+</html>

@@ -7,9 +7,11 @@ using WebApplication1.Models;
 using System.Dynamic;
 using Newtonsoft.Json.Linq;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [AllowAnonymous]
     public class CheckoutController : MasterController
     {
         public CheckoutController(_DbContext context): base(context)

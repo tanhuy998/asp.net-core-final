@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [AllowAnonymous]
     public class MasterController : Controller
     {
         protected _DbContext _dbContext;

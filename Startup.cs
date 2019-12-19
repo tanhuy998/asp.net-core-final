@@ -10,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1
 {
@@ -35,6 +38,21 @@ namespace WebApplication1
 
             services.AddDbContext<_DbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MSSQL")));
 
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<_DbContext>();
+
+
+
+            services.AddMvc(config =>
+            {
+                // using Microsoft.AspNetCore.Mvc.Authorization;
+                // using Microsoft.AspNetCore.Authorization;
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+
             //services.Configure<CookiePolicyOptions>(options =>
             //{
             //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -59,12 +77,14 @@ namespace WebApplication1
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseCookiePolicy();    
+            //app.UseCookiePolicy();  
+            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseRouting();
 
-            app.UseAuthorization();
-
             
+            
+
 
             app.UseEndpoints(endpoints =>
             {

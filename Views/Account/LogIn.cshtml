@@ -1,0 +1,30 @@
+﻿@model WebApplication1.ViewModels.AccountLogintViewModel
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>LogIn</title>
+
+	<environment include="Development">
+		<link rel="stylesheet" href="~/css/account.css" />
+	</environment>
+</head>
+<body>
+	<div id="login-box">
+		<div class="left">
+			<h1>Log In</h1>
+			<form method="post" asp-controller="Account" asp-action="LogIn">
+				<input asp-for="Email" type="text" placeholder="E-mail" />
+				<input asp-for="Password" placeholder="Password" />
+				<input type="submit" name="signup_submit" value="Log In" />
+			</form>
+		</div>
+
+	</div>
+</body>
+</html>
