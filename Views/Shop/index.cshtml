@@ -1,4 +1,4 @@
-﻿
+﻿@model WebApplication1.lib.PaginatedList<WebApplication1.Models.Product>
 @{
 	ViewData["Title"] = "index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,6 +23,7 @@
 	<div class="container">
 		<div class="row">
 			@*@include('layouts.leftSideBar')*@
+			<partial name="~/Views/Shared/_SearchSidebar.cshtml"/>
 
 			@foreach (var product in ViewBag.Products)
 			{
@@ -49,28 +50,44 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="product-pagination text-center">
+					@{
+						var prevDisabled = !ViewBag.Products.HasPreviousPage ? "disabled" : "";
+						var nextDisabled = !ViewBag.Products.HasNextPage ? "disabled" : "";
+					}
+
+					<a asp-action="Index"
+					   asp-route-pageNumber="@(ViewBag.Products.PageIndex - 1)"
+					   class="btn btn-default @prevDisabled">
+						Previous
+					</a>
+					<a asp-action="Index"
+					   asp-route-pageNumber="@(ViewBag.Products.PageIndex + 1)"
+					   class="btn btn-default @nextDisabled">
+						Next
+					</a>
+
 					@*@if ($page != 10)
-									{ { $products->links() } }
-					@endif*@
+						{ { $products->links() } }
+		@endif*@
 					<!-- <nav>
-					  <ul class="pagination">
-						<li>
-						  <a href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						  </a>
-						</li>
-						<li><a href="">1</a></li>
-						 <li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li>
-						  <a href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						  </a>
-						</li>
-					  </ul>
-					</nav> -->
+	  <ul class="pagination">
+		<li>
+		  <a href="#" aria-label="Previous">
+			<span aria-hidden="true">&laquo;</span>
+		  </a>
+		</li>
+		<li><a href="">1</a></li>
+		 <li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li>
+		  <a href="#" aria-label="Next">
+			<span aria-hidden="true">&raquo;</span>
+		  </a>
+		</li>
+	  </ul>
+	</nav> -->
 				</div>
 			</div>
 		</div>

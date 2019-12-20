@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.lib;
 
 namespace WebApplication1.Controllers
 {
@@ -19,10 +20,15 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        [Route("Orders/{pageNumber?}")]
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var _DbContext = _context.Orders.Include(o => o.Payment);
-            return View(await _DbContext.ToListAsync());
+            var orders = _context.Orders
+                .Include(o => o.Payment)
+                .ThenInclude(p => p.Method)
+                .Select(o => o);
+            int pageSize = 8;
+            return View(await PaginatedList<Order>.CreateAsync(orders, pageNumber ?? 1, pageSize));
         }
 
         // GET: Orders/Details/5

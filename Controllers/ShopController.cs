@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using WebApplication1.lib;
 
 namespace WebApplication1.Controllers
 {
@@ -18,8 +19,8 @@ namespace WebApplication1.Controllers
             //_context = context;
         }
 
-        [Route("shop/{slug}")]
-        public async Task<IActionResult> Index(string slug)
+        [Route("shop/{slug}/{pageNumber?}")]
+        public async Task<IActionResult> Index(string slug, int? pageNumber)
         {
          
 
@@ -31,8 +32,7 @@ namespace WebApplication1.Controllers
             {
                 var products = _dbContext.Products
                     .Where(p => p.Category == cat)
-                    .Select(p => p)
-                    .ToList();
+                    .Select(p => p);
 
                 Dictionary<int, string> imgs = new Dictionary<int, string>();
 
@@ -57,8 +57,9 @@ namespace WebApplication1.Controllers
                 //{
                 //    content += product.Name + "\n";
                 //}
+                int pageSize = 2;
                 ViewBag.category = cat;
-                ViewBag.products = products;
+                ViewBag.products = await PaginatedList<Product>.CreateAsync(products, pageNumber ?? 1, pageSize);
                 ViewBag.categories = GetMasterData();
                 ViewBag.imgs = imgs;
 

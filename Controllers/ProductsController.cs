@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using WebApplication1.Models;
 using System.IO;
+using WebApplication1.lib;
 
 namespace WebApplication1.Controllers
 {
@@ -21,10 +22,49 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        [Route("Products/{pageNumber?}")]
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var _DbContext = _context.Products.Include(p => p.Category);
-            return View(await _DbContext.ToListAsync());
+            //ViewData["CurrentSort"] = sortOrder;
+            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            //if (searchString != null)
+            //{
+            //    pageNumber = 1;
+            //}
+            //else
+            //{
+            //    searchString = currentFilter;
+            //}
+
+            //ViewData["CurrentFilter"] = searchString;
+
+            var students = from s in _context.Products
+                           select s;
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    students = students.Where(s => s.LastName.Contains(searchString)
+            //                           || s.FirstMidName.Contains(searchString));
+            //}
+            //switch (sortOrder)
+            //{
+            //    case "name_desc":
+            //        students = students.OrderByDescending(s => s.LastName);
+            //        break;
+            //    case "Date":
+            //        students = students.OrderBy(s => s.EnrollmentDate);
+            //        break;
+            //    case "date_desc":
+            //        students = students.OrderByDescending(s => s.EnrollmentDate);
+            //        break;
+            //    default:
+            //        students = students.OrderBy(s => s.LastName);
+            //        break;
+            //}
+
+            int pageSize = 8;
+            return View(await PaginatedList<Product>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Products/Details/5
