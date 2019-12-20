@@ -383,9 +383,15 @@ toggle between hiding and showing the dropdown content */
 // Close the dropdown if the user clicks outside of it
 
 function SearchProduct(name) {
-    let domain = GetFQDN();
 
-    let slug =  name.replace(/ +/g, '-');
+    if (name != "") {
+        let domain = GetFQDN();
 
-    document.location.href = domain + '/search/' + name;
+        let slug = name.replace(/ +/g, '-');
+
+        document.location.href = domain + '/search/' + name;
+    }
+    else {
+        alert("Quý khách chưa nhập tên sản phẩm cần tìm kiếm!");
+    }
 }
