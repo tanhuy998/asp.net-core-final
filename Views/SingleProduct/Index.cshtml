@@ -15,6 +15,7 @@
 	<div class="container">
 		<div class="row">
 			@*@include('layouts.leftSideBar')*@
+			<partial name="~/Views/Shared/_SearchSideBar.cshtml"/>
 			<div class="col-md-8">
 				<div class="product-content-right">
 					<!-- <div class="product-breadcroumb">
@@ -57,9 +58,9 @@
 								@*@include('layouts.shareSDK')
 								@include('layouts.shareButton')*@
 
-								<div class="product-inner-category">
+								@*<div class="product-inner-category">
 									<p>Category: <a href="{{ route('shop', ['category' => $product->category->slug]) }}"> {{ $product->category->name }}</a>. Tags:  <a href="">Black</a>, <a href="">sale</a>, <a href="">Cổ điển</a>. </p>
-								</div>
+								</div>*@
 
 								<div role="tabpanel">
 									<ul class="product-tab" role="tablist">
