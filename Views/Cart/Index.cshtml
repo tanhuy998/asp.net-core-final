@@ -26,6 +26,7 @@
 	<div class="container">
 		<div class="row">
 			@*@include('layouts.leftSideBar')*@
+			<partial name="~/Views/Shared/_SearchSidebar.cshtml"/>
 
 			<div class="col-md-8">
 				<div class="product-content-right">
@@ -52,13 +53,16 @@
 						</td>
 
 						<td class="product-thumbnail">
-							<a href="{{ route('product', ['id' => $product->slug]) }}">
-								<img width="145" height="145" alt="{{ $product->slug }}" class="shop_thumbnail" src="{{ asset('resources/img/'.($product->images->first())? $product->images->first()->path: '') }}">
+							<a asp-controller="product" asp-action="" asp-route-id="@item.Product.Slug">
+								@{ 
+									string imgPath = string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, "/img/", item.Image.Path);
+								}
+								<img width="145" height="145" alt="@item.Product.Slug" class="shop_thumbnail" src="@imgPath">
 							</a>
 						</td>
 
 						<td class="product-name">
-							<a href="{{ route('product', ['id' => $product->slug]) }}">
+							<a asp-controller="Product" asp-action="Index" asp-route-id="@item.Product.Slug">
 								@item.Product.Name
 							</a>
 						</td>

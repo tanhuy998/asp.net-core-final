@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Dynamic;
 using WebApplication1.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
@@ -38,7 +39,14 @@ namespace WebApplication1.Controllers
                 {
                     var product = _dbContext.Products
                         .Find(int.Parse(item["id"].ToString()));
+                    //.Where(p => p.ProductId == int.Parse(item["id"].ToString()))
+                    //.Include(p => p.Images)
+                    //.Select(p => p);
 
+                    var image = _dbContext.Images
+                        .Where(i => i.ProductId == product.ProductId)
+                        .FirstOrDefault();
+                        
                     if (product != null)
                     {
                         dynamic obj = new ExpandoObject();
@@ -46,6 +54,7 @@ namespace WebApplication1.Controllers
                         obj.Product = product;
                         obj.Quantity = item["qty"].ToString();
                         obj.Total = product.Price * int.Parse(obj.Quantity);
+                        obj.Image = image ?? new Image { Path = ""};
 
                         totalPrice += product.Price * int.Parse(obj.Quantity);
 
